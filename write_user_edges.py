@@ -40,7 +40,7 @@ def write_user_edges(referents_out, public_keys_out, edges_out, rows, user_hash)
             if len(pk_list) != 0: #are there referents?
                 pk_list.insert(0, row[1])
                 pk_out.write(",".join(map(str, map(int, pk_list))) + '\n')
-            line = [int(row[1]), int(user_hash[pubkey]), int(user_hash[row[3]]), int(row[4]), str(round(float(row[5])*1.0e-15, 14))] # I try to preserve 8 digits of significance here (see: rounding). I've looked closely at getting this precision correct and cant find an incorrect instance. Most transactions are 2 sig. figs.
+            line = [int(row[1]), int(user_hash[pubkey]), int(user_hash[row[3]]), int(row[4]), str(round(float(row[5])*1.0e-9, 8))] # I try to preserve 8 digits of significance here (see: rounding). I've looked closely at getting this precision correct and cant find an incorrect instance. Most transactions are 2 sig. figs.
             e_out.write(",".join(map(str, line)) + '\n') #write to string
             rf_list = []
             pk_list = []
