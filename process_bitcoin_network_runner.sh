@@ -8,10 +8,13 @@
 # 
 # This script runs under 3 hours and 10GB on a standard laptop. You can always try to move the "rows" matrix out of main memory by pickling rows to a bsddb, but at least three columns will need to be in memory for sort operations.  
 #
+
+# Update: April 10 2013: Fixed underflow for small transactions
+
 ############
 start=$(date +%s)
 file_path=~/scratch/ #path of output files
-lib_path=~/Dropbox/comp_bio_home/bitcoin_scripts/lib/ #path of bitcointools (with --all-transactions functionality) 
+lib_path=~/Documents/bitcointools/ #path of bitcointools with trailing slash (with --all-transactions functionality) 
 transactions_in="transactions.txt" #raw file saved from bitcointools
 transaction_keys="transactionkey_list.txt"  #key strings of transactions
 pub_keys="pubkey_list.txt" #key strings of pubkeys
@@ -21,8 +24,8 @@ referent_public_keys_out="user_edge_input_public_keys.txt" #public keys of claim
 edges_out="user_edges.txt" #main data file
 
 #extract data using 
-#python ${lib_path}"dbdump.py" --all-transactions > ${file_path}${transactions_in}  #using harrigan's library to raw text
-#echo "Completed: writing raw transaction file"
+python ${lib_path}"dbdump.py" --all-transactions > ${file_path}${transactions_in}  #using harrigan's library to raw text
+echo "Completed: writing raw transaction file"
 
 python process_bitcoin_network.py ${file_path}${transactions_in} ${file_path}${transaction_keys} ${file_path}${pub_keys} ${file_path}${users_out} ${file_path}${referents_out} ${file_path}${referent_public_keys_out} ${file_path}${edges_out} ${file_path}
 end=$(date +%s)
